@@ -25,6 +25,7 @@
   --color-smoke: rgba(140, 140, 140, 0.55);
   --shadow-soft: 0 12px 32px rgba(226, 62, 109, 0.18);
   --font-script: "Dancing Script", cursive;
+  --font-heading: "Lobster", cursive;
   --font-body: "Quicksand", system-ui, sans-serif;
 }
 
@@ -44,8 +45,8 @@ body {
   background: linear-gradient(160deg, var(--color-bg-start), var(--color-bg-end));
 }
 
-/* Floating hearts background */
-.hearts {
+/* Floating icons background */
+.floating-icons {
   position: fixed;
   inset: 0;
   z-index: 0;
@@ -53,12 +54,61 @@ body {
   pointer-events: none;
 }
 
-.hearts__item {
+.floating-icons__item {
   position: absolute;
-  bottom: -2rem;
+  bottom: -2.5rem;
   color: var(--color-primary);
-  opacity: 0.3;
+  opacity: 0.55;
   animation: float-up linear infinite;
+}
+
+/* Music toggle */
+.music-toggle {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 2px solid var(--color-primary);
+  border-radius: 50%;
+  font: 700 1.25rem var(--font-body);
+  color: var(--color-primary);
+  background: var(--color-card);
+  box-shadow: var(--shadow-soft);
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.music-toggle[hidden] {
+  display: none;
+}
+
+.music-toggle:focus-visible {
+  outline: 3px solid var(--color-primary-dark);
+  outline-offset: 3px;
+}
+
+.music-toggle[aria-pressed="true"] .music-toggle__icon {
+  animation: bounce 1s ease-in-out infinite;
+}
+
+.music-toggle[aria-pressed="false"] {
+  opacity: 0.6;
+}
+
+/* Strike-through line when muted */
+.music-toggle[aria-pressed="false"]::after {
+  content: "";
+  position: absolute;
+  width: 26px;
+  height: 2px;
+  background: currentColor;
+  transform: rotate(-45deg);
 }
 
 /* Layout */
@@ -82,10 +132,10 @@ body {
   max-width: 28rem;
   text-align: center;
   animation: step-in 0.7s ease both;
+}
 
-  &[hidden] {
-    display: none;
-  }
+.step[hidden] {
+  display: none;
 }
 
 [data-step-heading]:focus {
@@ -114,31 +164,31 @@ body {
   background: var(--color-primary);
   cursor: pointer;
   transition: transform 0.2s ease, background-color 0.2s ease;
+}
 
-  &:hover {
-    background: var(--color-primary-dark);
-    transform: translateY(-2px);
-  }
+.btn:hover {
+  background: var(--color-primary-dark);
+  transform: translateY(-2px);
+}
 
-  &:focus-visible {
-    outline: 3px solid var(--color-primary-dark);
-    outline-offset: 3px;
-  }
+.btn:focus-visible {
+  outline: 3px solid var(--color-primary-dark);
+  outline-offset: 3px;
+}
 
-  &[disabled] {
-    opacity: 0.6;
-    cursor: progress;
-    transform: none;
-  }
+.btn[disabled] {
+  opacity: 0.6;
+  cursor: progress;
+  transform: none;
 }
 
 .btn--ghost {
   color: var(--color-primary);
   background: transparent;
+}
 
-  &:hover {
-    color: var(--color-white);
-  }
+.btn--ghost:hover {
+  color: var(--color-white);
 }
 
 /* Step 1: gift */
@@ -158,30 +208,30 @@ body {
   background: none;
   cursor: pointer;
   animation: wiggle 2.5s ease-in-out infinite;
+}
 
-  &:focus-visible {
-    outline: 3px solid var(--color-primary-dark);
-    outline-offset: 6px;
-    border-radius: 1rem;
-  }
+.gift:focus-visible {
+  outline: 3px solid var(--color-primary-dark);
+  outline-offset: 6px;
+  border-radius: 1rem;
+}
 
-  &.is-shaking {
-    animation: shake 0.5s ease;
-  }
+.gift.is-shaking {
+  animation: shake 0.5s ease;
+}
 
-  &.is-open {
-    cursor: default;
-    animation: none;
+.gift.is-open {
+  cursor: default;
+  animation: none;
+}
 
-    .gift__lid {
-      opacity: 0;
-      transform: translateY(-160px) rotate(-25deg);
-    }
+.gift.is-open .gift__lid {
+  opacity: 0;
+  transform: translateY(-160px) rotate(-25deg);
+}
 
-    .gift__body {
-      box-shadow: 0 -24px 48px var(--color-glow);
-    }
-  }
+.gift.is-open .gift__body {
+  box-shadow: 0 -24px 48px var(--color-glow);
 }
 
 .gift__lid {
@@ -194,44 +244,45 @@ body {
   border-radius: 10px;
   background: var(--color-gift-dark);
   transition: transform 0.9s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.9s ease;
+}
 
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    width: 26px;
-    background: var(--color-ribbon);
-    transform: translateX(-50%);
-  }
+.gift__lid::before,
+.gift__body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 26px;
+  background: var(--color-ribbon);
+  transform: translateX(-50%);
 }
 
 .gift__bow {
   position: absolute;
   bottom: 100%;
   left: 50%;
+}
 
-  &::before,
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: -6px;
-    width: 42px;
-    height: 30px;
-    border: 8px solid var(--color-ribbon);
-    border-radius: 50%;
-  }
+.gift__bow::before,
+.gift__bow::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  width: 42px;
+  height: 30px;
+  border: 8px solid var(--color-ribbon);
+  border-radius: 50%;
+}
 
-  &::before {
-    right: -2px;
-    transform: rotate(20deg);
-  }
+.gift__bow::before {
+  right: -2px;
+  transform: rotate(20deg);
+}
 
-  &::after {
-    left: -2px;
-    transform: rotate(-20deg);
-  }
+.gift__bow::after {
+  left: -2px;
+  transform: rotate(-20deg);
 }
 
 .gift__body {
@@ -243,17 +294,6 @@ body {
   border-radius: 0 0 12px 12px;
   background: var(--color-gift);
   transition: box-shadow 0.6s ease;
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    width: 26px;
-    background: var(--color-ribbon);
-    transform: translateX(-50%);
-  }
 }
 
 /* Step 2: cake */
@@ -299,33 +339,33 @@ body {
   z-index: 1;
   display: flex;
   align-items: flex-end;
-  gap: 12px;
+  gap: 10px;
   margin-bottom: -8px;
 }
 
 .cake__tier {
   position: relative;
   overflow: hidden;
+}
 
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 16px;
-    background: var(--color-cake-cream);
-  }
+.cake__tier::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 16px;
+  background: var(--color-cake-cream);
+}
 
-  &::after {
-    content: "";
-    position: absolute;
-    top: 16px;
-    left: 0;
-    right: 0;
-    height: 10px;
-    background: radial-gradient(circle at 50% 0, var(--color-cake-cream) 6px, transparent 7px) 0 0 / 18px 10px repeat-x;
-  }
+.cake__tier::after {
+  content: "";
+  position: absolute;
+  top: 16px;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background: radial-gradient(circle at 50% 0, var(--color-cake-cream) 6px, transparent 7px) 0 0 / 18px 10px repeat-x;
 }
 
 .cake__tier--top {
@@ -363,49 +403,47 @@ body {
   border-radius: 4px 4px 2px 2px;
   background: repeating-linear-gradient(45deg, var(--color-candle) 0 6px, var(--color-candle-stripe) 6px 10px);
   cursor: pointer;
+}
 
-  /* Wick */
-  &::before {
-    content: "";
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    width: 2px;
-    height: 6px;
-    margin-left: -1px;
-    background: var(--color-wick);
-  }
+/* Wick */
+.candle::before {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  width: 2px;
+  height: 6px;
+  margin-left: -1px;
+  background: var(--color-wick);
+}
 
-  /* Larger tap target that includes the flame */
-  &::after {
-    content: "";
-    position: absolute;
-    top: -36px;
-    bottom: 0;
-    left: -6px;
-    right: -6px;
-  }
+/* Larger tap target that includes the flame */
+.candle::after {
+  content: "";
+  position: absolute;
+  top: -36px;
+  bottom: 0;
+  left: -5px;
+  right: -5px;
+}
 
-  &:focus-visible {
-    outline: 2px solid var(--color-primary-dark);
-    outline-offset: 4px;
-  }
+.candle:focus-visible {
+  outline: 2px solid var(--color-primary-dark);
+  outline-offset: 4px;
+}
 
-  &[disabled] {
-    cursor: default;
-  }
+.candle[disabled] {
+  cursor: default;
+}
 
-  &.is-out {
-    .candle__flame {
-      opacity: 0;
-      scale: 0.2;
-      animation: none;
-    }
+.candle.is-out .candle__flame {
+  opacity: 0;
+  scale: 0.2;
+  animation: none;
+}
 
-    .candle__smoke {
-      animation: smoke 1.2s ease-out forwards;
-    }
-  }
+.candle.is-out .candle__smoke {
+  animation: smoke 1.2s ease-out forwards;
 }
 
 .candle__flame {
@@ -440,9 +478,17 @@ body {
 /* Final: wish */
 .wish__heading {
   margin: 0;
-  font-family: var(--font-script);
-  font-size: clamp(2.25rem, 8vw, 2.75rem);
+  font-family: var(--font-heading);
+  font-size: clamp(1.75rem, 7vw, 2.25rem);
+  font-weight: 400;
+  line-height: 1.35;
   color: var(--color-primary);
+}
+
+.wish__message {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .wish__text {
@@ -452,10 +498,55 @@ body {
 
 .wish__signature {
   align-self: flex-end;
-  margin: 0.5rem 0 1rem;
+  margin: 0.5rem 0 0;
   font-family: var(--font-script);
   font-size: 1.5rem;
   text-align: right;
+}
+
+.wish__heart {
+  color: var(--color-primary);
+}
+
+.wish__replay {
+  transition: opacity 0.6s ease, visibility 0.6s, transform 0.2s ease, background-color 0.2s ease;
+}
+
+.wish.is-typing {
+  cursor: pointer;
+}
+
+.wish.is-typing + .wish__replay {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Typewriter */
+.typewriter__rest {
+  visibility: hidden;
+}
+
+.typewriter__typed.is-active::after {
+  content: "";
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  margin-right: -2px;
+  vertical-align: -0.15em;
+  background: currentColor;
+  animation: caret-blink 0.8s steps(1) infinite;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* Animations */
@@ -501,6 +592,15 @@ body {
 @keyframes flicker {
   from { scale: 1 1; }
   to { scale: 0.92 1.08; }
+}
+
+@keyframes caret-blink {
+  50% { opacity: 0; }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
 }
 
 @keyframes smoke {

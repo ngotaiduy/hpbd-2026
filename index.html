@@ -6,13 +6,17 @@
   <title>Happy Birthday</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Quicksand:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Lobster&family=Quicksand:wght@400;500;700&display=swap">
   <link rel="stylesheet" href="css/style.css">
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js" defer></script>
   <script src="js/main.js" defer></script>
 </head>
 <body>
-  <div class="hearts" aria-hidden="true"></div>
+  <div class="floating-icons" aria-hidden="true"></div>
+
+  <button class="music-toggle" id="music-toggle" type="button" aria-label="Nhạc nền" aria-pressed="true" hidden>
+    <span class="music-toggle__icon" aria-hidden="true">♪</span>
+  </button>
 
   <main class="birthday">
     <!-- Step 1: gift box -->
@@ -28,16 +32,10 @@
     <section class="step" data-step="cake" aria-labelledby="cake-heading" hidden>
       <div class="cake-scene__greeting">
         <h2 class="cake-scene__heading" id="cake-heading" tabindex="-1" data-step-heading>Happy Birthday</h2>
-        <p class="cake-scene__name">Em yêu của anh</p>
+        <p class="cake-scene__name">Vũ Hà Thư</p>
       </div>
       <div class="cake" id="cake">
-        <div class="cake__candles">
-          <button class="candle" type="button" aria-label="Thổi tắt ngọn nến 1"><span class="candle__flame"></span><span class="candle__smoke"></span></button>
-          <button class="candle" type="button" aria-label="Thổi tắt ngọn nến 2"><span class="candle__flame"></span><span class="candle__smoke"></span></button>
-          <button class="candle" type="button" aria-label="Thổi tắt ngọn nến 3"><span class="candle__flame"></span><span class="candle__smoke"></span></button>
-          <button class="candle" type="button" aria-label="Thổi tắt ngọn nến 4"><span class="candle__flame"></span><span class="candle__smoke"></span></button>
-          <button class="candle" type="button" aria-label="Thổi tắt ngọn nến 5"><span class="candle__flame"></span><span class="candle__smoke"></span></button>
-        </div>
+        <div class="cake__candles"></div>
         <div class="cake__tier cake__tier--top"></div>
         <div class="cake__tier cake__tier--bottom"></div>
         <div class="cake__plate"></div>
@@ -49,12 +47,15 @@
     <!-- Final: birthday wish -->
     <section class="step" data-step="wish" aria-labelledby="wish-heading" hidden>
       <article class="card wish">
-        <h2 class="wish__heading" id="wish-heading" tabindex="-1" data-step-heading>Chúc mừng sinh nhật em!</h2>
-        <p class="wish__text">Tuổi mới chúc em luôn xinh đẹp, vui vẻ và được làm tất cả những điều em thích. Cảm ơn em đã đến bên anh và khiến mỗi ngày đều trở nên đặc biệt.</p>
-        <p class="wish__text">Anh sẽ luôn ở đây, cùng em đón thêm thật nhiều sinh nhật nữa.</p>
-        <p class="wish__signature">Yêu em,<br>Anh</p>
-        <button class="btn btn--ghost" id="replay" type="button">Xem lại từ đầu</button>
+        <h2 class="wish__heading" id="wish-heading" tabindex="-1" data-step-heading data-typewriter>Nhiệt liệt chào mừng tuổi tác đổi mới lần thứ XXVI</h2>
+        <div class="wish__message">
+          <p class="wish__text" data-typewriter>Chúc cho em tuổi mới luôn vui vẻ, hạnh phúc và nhiều điều may mắn</p>
+          <p class="wish__text" data-typewriter>Mong cho em mọi điều tốt đẹp nhất!</p>
+          <p class="wish__text" data-typewriter>Anh sẽ luôn ở đây, cùng em đón thêm thật nhiều sinh nhật nữa.</p>
+        </div>
+        <p class="wish__signature" data-typewriter>Yêu em,<br>Duynt from with love <span class="wish__heart">♥</span></p>
       </article>
+      <button class="btn btn--ghost wish__replay" id="replay" type="button">Xem lại nhé</button>
     </section>
   </main>
 </body>
